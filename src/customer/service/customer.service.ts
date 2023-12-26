@@ -1,4 +1,3 @@
-import { ProductService } from "src/product/service/product.service";
 import { CustomerRepository } from "../repository/customer.repository";
 import { Customer } from "../entity/customer.entity";
 import { Injectable, NotFoundException } from "@nestjs/common";
@@ -13,7 +12,6 @@ import {
 export class CustomerService {
   constructor(
     private readonly customerRepository: CustomerRepository,
-    private readonly productService: ProductService
   ) {}
 
   async findAll(): Promise<Customer[]> {

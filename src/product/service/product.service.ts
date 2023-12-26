@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateProductDto } from "../dto/create-product.dto";
 import { UpdateProductDto } from "../dto/update-product.dto";
 import { ProductRepository } from "../repository/product.repository";
+import { CustomerService } from "src/customer/service/customer.service";
 import { Product } from "../entity/product.entity";
 import {
   fromCreatedDtoToEntity,
@@ -10,7 +11,10 @@ import {
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly productRepository: ProductRepository) {}
+  constructor(
+    private readonly productRepository: ProductRepository,
+    private readonly customerService: CustomerService
+  ) {}
 
   async findAll(): Promise<Product[]> {
     return await this.productRepository.findAll();
@@ -28,6 +32,15 @@ export class ProductService {
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
     const mappedProduct = fromCreatedDtoToEntity(createProductDto);
+
+    const customer = await this.customerService.findOne(
+      createProductDto.customerId
+    );
+
+    if (!customer) {
+      throw new NotFoundException("Customer not found");
+    }
+
     return await this.productRepository.create(mappedProduct);
   }
 
@@ -42,6 +55,15 @@ export class ProductService {
     }
 
     const mappedProduct = fromUpdatedDtoToEntity(updateProductDto);
+
+    const customer = await this.customerService.findOne(
+      updateProductDto.customerId
+    );
+
+    if (!customer) {
+      throw new NotFoundException("Customer not found");
+    }
+
     return await this.productRepository.update(id, mappedProduct);
   }
 

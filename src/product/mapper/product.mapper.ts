@@ -7,6 +7,8 @@ export function fromCreatedDtoToEntity(source: CreateProductDto): Product {
   mappedProduct.name = source.name;
   mappedProduct.category = source.category;
   mappedProduct.description = source.description;
+  mappedProduct.customerId = source.customerId;
+  mappedProduct.quantity = source.quantity;
 
   return mappedProduct;
 }
@@ -17,6 +19,8 @@ export function fromUpdatedDtoToEntity(source: UpdateProductDto): Product {
   mappedProduct.name = source.name;
   mappedProduct.category = source.category;
   mappedProduct.description = source.description;
+  mappedProduct.customerId = source.customerId;
+  mappedProduct.quantity = source.quantity;
 
   return mappedProduct;
 }

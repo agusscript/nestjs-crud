@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Customer } from "src/customer/entity/customer.entity";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 
 export enum allowedCategories {
   BOOKS = "Books",
@@ -26,4 +27,13 @@ export class Product {
 
   @Column({ nullable: true })
   description: string;
+
+  @Column({ nullable: true })
+  customerId: number;
+
+  @Column({ default: 1 })
+  quantity: number;
+
+  @ManyToOne(() => Customer, (customer) => customer.products)
+  customer: Customer;
 }

@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ProductsModule } from "./product/product.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
+import { CustomerModule } from "./customer/customer.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { DataSource } from "typeorm";
       },
     }),
     ProductsModule,
+    CustomerModule,
   ],
   controllers: [],
   providers: [],

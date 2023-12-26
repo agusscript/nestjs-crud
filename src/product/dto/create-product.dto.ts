@@ -1,5 +1,5 @@
 import { allowedCategories } from "../entity/product.entity";
-import { IsIn, IsNotEmpty, IsString} from "class-validator";
+import { IsIn, IsNotEmpty, IsString, IsNumber } from "class-validator";
 
 export class CreateProductDto {
   @IsString()
@@ -13,4 +13,10 @@ export class CreateProductDto {
 
   @IsString()
   description: string;
+
+  @IsNumber()
+  customerId: number;
+
+  @IsNumber()
+  quantity: number;
 }

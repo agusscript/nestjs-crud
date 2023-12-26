@@ -26,4 +26,12 @@ export class UpdateProductDto {
   @IsString()
   @IsOptional()
   description?: string;
+
+  @IsNumber()
+  @IsOptional()
+  customerId?: number;
+
+  @IsNumber()
+  @IsOptional()
+  quantity?: number;
 }

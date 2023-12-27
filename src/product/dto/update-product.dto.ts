@@ -1,3 +1,4 @@
+import { Customer } from "src/customer/entity/customer.entity";
 import { allowedCategories } from "../entity/product.entity";
 import {
   IsNotEmpty,
@@ -8,30 +9,29 @@ import {
 } from "class-validator";
 
 export class UpdateProductDto {
-  @IsNumber()
-  @IsNotEmpty()
-  id: number;
-
   @IsString()
   @IsNotEmpty()
   @IsOptional()
-  name?: string;
+  name: string;
 
   @IsString()
   @IsNotEmpty()
   @IsIn(Object.values(allowedCategories))
   @IsOptional()
-  category?: allowedCategories;
+  category: allowedCategories;
 
   @IsString()
   @IsOptional()
-  description?: string;
+  description: string;
 
   @IsNumber()
   @IsOptional()
-  customerId?: number;
+  quantity: number;
 
   @IsNumber()
   @IsOptional()
-  quantity?: number;
+  customerId: number;
+
+  @IsOptional()
+  customer: Customer;
 }

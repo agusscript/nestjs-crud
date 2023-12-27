@@ -1,5 +1,6 @@
+import { Customer } from "src/customer/entity/customer.entity";
 import { allowedCategories } from "../entity/product.entity";
-import { IsIn, IsNotEmpty, IsString, IsNumber } from "class-validator";
+import { IsIn, IsNotEmpty, IsString, IsNumber, IsOptional } from "class-validator";
 
 export class CreateProductDto {
   @IsString()
@@ -9,14 +10,20 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   @IsIn(Object.values(allowedCategories))
-  category: allowedCategories;
+  category = allowedCategories.OTHERS;
 
   @IsString()
+  @IsOptional()
   description: string;
 
   @IsNumber()
-  customerId: number;
+  @IsOptional()
+  quantity: number;
 
   @IsNumber()
-  quantity: number;
+  @IsOptional()
+  customerId: number;
+
+  @IsOptional()
+  customer: Customer;
 }

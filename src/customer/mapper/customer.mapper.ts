@@ -11,7 +11,6 @@ export function fromCreatedDtoToEntity(source: CreateCustomerDto) {
 
 export function fromUpdatedDtoToEntity(source: UpdateCustomerDto) {
   const mappedCustomer = new Customer();
-  mappedCustomer.id = source.id;
   mappedCustomer.name = source.name;
 
   return mappedCustomer;

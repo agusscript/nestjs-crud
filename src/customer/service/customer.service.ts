@@ -7,12 +7,11 @@ import {
   fromCreatedDtoToEntity,
   fromUpdatedDtoToEntity,
 } from "../mapper/customer.mapper";
+import { Product, allowedCategories } from "src/product/entity/product.entity";
 
 @Injectable()
 export class CustomerService {
-  constructor(
-    private readonly customerRepository: CustomerRepository,
-  ) {}
+  constructor(private readonly customerRepository: CustomerRepository) {}
 
   async findAll(): Promise<Customer[]> {
     return await this.customerRepository.findAll();
@@ -37,23 +36,11 @@ export class CustomerService {
     id: number,
     updateCustomerDto: UpdateCustomerDto
   ): Promise<Customer> {
-    const customer = await this.customerRepository.findOne(id);
-
-    if (!customer) {
-      throw new NotFoundException("Customer not found");
-    }
-
     const mappedCustomer = fromUpdatedDtoToEntity(updateCustomerDto);
     return await this.customerRepository.update(id, mappedCustomer);
   }
 
-  async remove(id: number): Promise<void> {
-    const customer = await this.customerRepository.findOne(id);
-
-    if (!customer) {
-      throw new NotFoundException("Customer not found");
-    }
-
+  async remove(id: number): Promise<true> {
     return await this.customerRepository.remove(id);
   }
 }

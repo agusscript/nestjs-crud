@@ -42,7 +42,7 @@ export class CustomerController {
   }
 
   @Delete(":id")
-  async remove(@Param("id") id: number): Promise<void> {
+  async remove(@Param("id") id: number): Promise<true> {
     return await this.customerService.remove(id);
   }
 }

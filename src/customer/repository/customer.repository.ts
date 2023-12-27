@@ -1,6 +1,7 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { Customer } from "../entity/customer.entity";
 import { Repository } from "typeorm";
+import { NotFoundException } from "@nestjs/common";
 
 export class CustomerRepository {
   constructor(
@@ -25,11 +26,22 @@ export class CustomerRepository {
   }
 
   async update(id: number, customer: Customer): Promise<Customer> {
-    await this.repository.update({ id }, customer);
-    return customer;
+    const { affected } = await this.repository.update(id, customer);
+
+    if (!affected) {
+      throw new NotFoundException("Product not found");
+    }
+
+    return await this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.repository.delete(id);
+  async remove(id: number): Promise<true> {
+    const { affected } = await this.repository.delete(id);
+
+    if (!affected) {
+      throw new NotFoundException("Product not found");
+    }
+
+    return true;
   }
 }

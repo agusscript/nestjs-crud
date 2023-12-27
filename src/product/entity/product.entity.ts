@@ -10,7 +10,7 @@ export enum allowedCategories {
   OTHERS = "Others",
 }
 
-@Entity({ name: "products" })
+@Entity({ name: "product" })
 export class Product {
   @PrimaryGeneratedColumn()
   id: number;
@@ -27,9 +27,6 @@ export class Product {
 
   @Column({ nullable: true })
   description: string;
-
-  @Column({ nullable: true })
-  customerId: number;
 
   @Column({ default: 1 })
   quantity: number;

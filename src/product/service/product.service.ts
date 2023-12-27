@@ -41,6 +41,7 @@ export class ProductService {
       throw new NotFoundException("Customer not found");
     }
 
+    mappedProduct.customer = customer;
     return await this.productRepository.create(mappedProduct);
   }
 
@@ -48,32 +49,11 @@ export class ProductService {
     id: number,
     updateProductDto: UpdateProductDto
   ): Promise<Product> {
-    const product = await this.productRepository.findOne(id);
-
-    if (!product) {
-      throw new NotFoundException("Product not found");
-    }
-
     const mappedProduct = fromUpdatedDtoToEntity(updateProductDto);
-
-    const customer = await this.customerService.findOne(
-      updateProductDto.customerId
-    );
-
-    if (!customer) {
-      throw new NotFoundException("Customer not found");
-    }
-
     return await this.productRepository.update(id, mappedProduct);
   }
 
-  async remove(id: number): Promise<void> {
-    const product = await this.productRepository.findOne(id);
-
-    if (!product) {
-      throw new NotFoundException("Product not found");
-    }
-
+  async remove(id: number): Promise<true> {
     return await this.productRepository.remove(id);
   }
 }

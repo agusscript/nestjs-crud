@@ -50,6 +50,16 @@ export class ProductService {
     updateProductDto: UpdateProductDto
   ): Promise<Product> {
     const mappedProduct = fromUpdatedDtoToEntity(updateProductDto);
+
+    const customer = await this.customerService.findOne(
+      updateProductDto.customerId
+    )
+
+    if (!customer) {
+      throw new NotFoundException("Customer not found");
+    }
+
+    mappedProduct.customer = customer;
     return await this.productRepository.update(id, mappedProduct);
   }
 
